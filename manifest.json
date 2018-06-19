@@ -1,8 +1,8 @@
 {
     "type": "extension",
     "id": "com.terra-it.tit-form.builder",
-    "version": "0.11",
-    "revision": 4,
+    "version": "0.12",
+    "revision": 5,
     "compatibility": "4.2+",
     "title": "FormBuilder",
     "description": "Nieuwe dingen toegevoegd",
