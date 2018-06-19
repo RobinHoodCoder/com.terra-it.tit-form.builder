@@ -1,0 +1,121 @@
+// Base style for inputs
+.form-intro{
+  margin-bottom: 20px;
+}
+#attention{
+  margin-bottom: 20px;
+}
+button{
+  border:none;
+}
+textarea{
+  margin-top: 25px !important;
+}
+form{
+  label, p{
+    margin:0;
+    padding:0;
+    display:block;
+    line-height: 180%;
+  }
+}
+input[type=text], input[type=date], input[type=datetime], input[type=number], input[type=search], input[type=time], input[type=url], input[type=tel], input[type=email], textarea {
+  border: none;
+  resize: none;
+  background: #eeeeee;
+  width: 100%;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: #797979;
+}
+
+form input, form select, form textarea {
+  box-sizing: border-box;
+  display: block;
+  line-height: 2em;
+  padding: 0 3%;
+}
+
+form{
+  select{
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  textarea{
+    height: 200px;
+  }
+}
+
+input[type=radio]{
+  display: inline-block;
+  margin-right: 5px;
+}
+input[type=number]{
+  display: inline-block;
+  margin-right: 5px;
+}
+input.number{
+  max-width:100px !important;
+}
+select.select{
+  background: @basicGrey;
+  border:none;
+  margin:0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position:relative;
+  z-index:4;
+  color: @baseFontColor;
+}
+
+//Placeholder styling
+::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder{
+  padding: 0;
+  font-size: 1em;
+}
+
+//Focus styling
+input:focus,select:focus,textarea:focus,option:focus{
+  .shadow(1);
+  outline: none;
+}
+
+//Anders, namelijk veld styling
+.extra-item{
+  margin-top:10px !important;
+}
+.form-input-group{
+  margin-bottom: 15px;
+}
+//Radio buttons
+radiogroup{
+  display: block;
+  label{
+    display: inline-block;
+    margin-right: 10px;
+  }
+}
+button{
+  background: @mainBlue;
+  padding: 5px 20px;
+  text-transform: uppercase;
+  color:#fff;
+  font-family: "Roboto Condensed", sans-serif;
+  &:hover{
+    background: darken(@mainBlue,10%);
+    text-decoration: underline;
+  }
+  &:disabled{
+    background: @mainGrey;
+    text-decoration: none;
+
+  }
+}
+.required-form-text{
+  font-weight: bold;
+  margin-bottom: 15px;
+}
