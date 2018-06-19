@@ -1,8 +1,8 @@
 {
     "type": "extension",
     "id": "com.terra-it.tit-form.builder",
-    "version": "0.1.2",
-    "revision": 10,
+    "version": "0.13",
+    "revision": 11,
     "compatibility": "4.2+",
     "title": "FormBuilder",
     "description": "Vardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...",
