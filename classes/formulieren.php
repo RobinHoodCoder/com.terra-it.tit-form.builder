@@ -18,6 +18,7 @@
 // 8. Elke keer dat een form word gegenereerd krijgt deze een unieke ID, dit maakt meerdere forms op een pagina mogelijk, ook minder kans op misbruik.
 // 9. IP Adres van gebruiker word meegestuurd.
 
+
 // Robin Edit JWZ
 // 1. Sterretjes bij verplicht
 // 2. Om elk veld een form input group div gezet voor makkelijke css aanpasbaarheid
