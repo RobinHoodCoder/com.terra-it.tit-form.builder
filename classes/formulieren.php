@@ -23,8 +23,11 @@
 // 2. Om elk veld een form input group div gezet voor makkelijke css aanpasbaarheid
 // 3. Let op, verwijder de list styling uit elements.less en gebruik form.less voor input velden styling
 
+
 // Insert javascript in de head
 //require('required/insert_js.php');
+var_dump($form);
+
 
 class mailTemplater{
 
