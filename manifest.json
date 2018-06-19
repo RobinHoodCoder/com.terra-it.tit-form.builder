@@ -2,10 +2,10 @@
     "type": "extension",
     "id": "com.terra-it.tit-form.builder",
     "version": "0.12",
-    "revision": 5,
+    "revision": 7,
     "compatibility": "4.2+",
     "title": "FormBuilder",
-    "description": "Nieuwe dingen toegevoegd",
+    "description": "Extensions zouden nu in site/extensions moeten komen na de update...",
     "keywords": [
         ""
     ],
