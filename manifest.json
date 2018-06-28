@@ -1,11 +1,11 @@
 {
     "type": "extension",
     "id": "com.terra-it.tit-form.builder",
-    "version": "0.13",
-    "revision": 11,
+    "version": "0.14",
+    "revision": 13,
     "compatibility": "4.2+",
     "title": "FormBuilder",
-    "description": "Vardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...",
+    "description": "Vardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...\r\ntitform.js aangepast voor disabled formuliervelden.",
     "keywords": [
         ""
     ],
