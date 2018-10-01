@@ -24,7 +24,7 @@ window.onload = function() {
 
         var nextField = $(this).parents('form').find('.disabled:first');
 
-        if ($(nextField).is(':disabled')){
+        if ($(nextField).is(':disabled','')){
             $(nextField).prop('disabled', false);
             $(nextField).removeClass('disabled');
         }

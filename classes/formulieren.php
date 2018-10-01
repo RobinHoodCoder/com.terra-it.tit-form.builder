@@ -8,6 +8,17 @@
  */
 
 //Changelog
+//01-10-2018
+//1. Conversiecode optie toegevoegd
+//2. Debugging optie toegevoegd:
+//     wann. ingelogd alleen ingevulde formulieren naar ingelogde gebruiker sturen
+//     Conversiecode staat uit wanneer ingelogd in het CMS
+//
+//3. LESS CSS geupdate (succesmelding is nu inbegrepen)
+//4. Required form text laten zien boven verzendbutton
+
+
+
 // 1. Namen van formuliersecties zichtbaar
 // 2. Formulier introductie tekst zichtbaar.
 // 3. Fuck google captcha, het is eruit.
@@ -72,7 +83,6 @@ function replace_key_function($array, $key1, $key2)
         $keys[$index] = $key2;
         $array = array_combine($keys, $array);
     }
-
     return $array;
 }
 
@@ -104,6 +114,7 @@ class TitForm extends BigTreeModule {
         $baseFields = new TitFormBaseFields;
         $baseFields = $baseFields->getApproved('position ASC');
         $formItems = $this->getApproved('position ASC');
+
 
         //Kies het juiste formulier
         foreach($formItems as $formItem){
@@ -276,7 +287,13 @@ class TitForm extends BigTreeModule {
 
             }else{
                 $userIP = $_SERVER["REMOTE_ADDR"];
-                $to = $formItems['email_to'];
+                if (isset($_SESSION['bigtree_admin']['email']) && $formItems['debugging'] === 'on'){
+                    $to = $_SESSION['bigtree_admin']['email'];
+                }
+                else{$to = $formItems['email_to'];}
+
+
+
                 $subject = $formItems['subject'];
                 $from = $formItems['email_from'];
                 $return = $post['email'];
@@ -350,15 +367,17 @@ class TitForm extends BigTreeModule {
                 $success = true;
             }
         }
+        if ($success === true) {
 
-        // Contact form succes & Error messages
-        if ($success === true) { ?>
-            <div class="form-success-overlay"><?=$formItems['success_message']?></div>
+            if (!isset($_SESSION['bigtree_admin']['email'])){?>
+<!--            Google conversiecode als deze is ingevuld en je niet bent ingelogd-->
+                <?=$formItems['conversion_code']?>
+            <?}?>
+            <div id="attention" class="form-success-overlay"><?=$formItems['success_message']?></div>
 
             <?
             $_SESSION['identifier'] = '';
         }
-
         if (isset($errorsHTML)) {
             echo '<div class="form-error-overlay">'.$formItems['error_introduction'].'';
             echo '<ul>';
@@ -370,7 +389,6 @@ class TitForm extends BigTreeModule {
             }else{
                 echo $errorsHTML;
             }
-
             echo '</div></ul>';
         }
         ?>
@@ -418,7 +436,7 @@ class TitForm extends BigTreeModule {
                                 if(isset($stageItem['title']) && !empty($stageItem['title']) && (!$stageItem['hide_title'])){
                                     echo '<div></div><div class="form-input-group"><h3>'.$stageItem['title'].'</h3></div>';
                                 }
-                                if($stageItem['hide_title'] == 'on'){?>
+                                if($stageItem['hide_title'] === 'on'){?>
 									<div class="form-spacer"></div>
                                 <?}
 
@@ -582,6 +600,7 @@ class TitForm extends BigTreeModule {
                                 }elseif($i <= 1){
 
                                 }
+
                             }
                         }
                     }
@@ -589,6 +608,9 @@ class TitForm extends BigTreeModule {
 				</div>
 
 				<div class="col-12">
+                    <?if(isset($formItems['required_text'])){?>
+                        <p class="required-form-text"><?=$formItems['required_text']?></p>
+                    <?}?>
 					<button type="submit" class="btn-green-send-s <?=$buttonDisabled?> content-button" name="form-submit"><?=$formItems['button_text']?></button>
 				</div>
 			</div>

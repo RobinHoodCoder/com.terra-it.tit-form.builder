@@ -1,11 +1,11 @@
 {
     "type": "extension",
     "id": "com.terra-it.tit-form.builder",
-    "version": "0.14",
-    "revision": 13,
+    "version": "0.15",
+    "revision": 15,
     "compatibility": "4.2+",
     "title": "FormBuilder",
-    "description": "Vardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...\r\ntitform.js aangepast voor disabled formuliervelden.",
+    "description": "Changelog 01-10-2018:\r\n1. Conversiecode optie toegevoegd\r\n2. Debugging optie toegevoegd:\r\nwann. ingelogd alleen ingevulde formulieren naar\r\ningelogde gebruiker sturen\r\n3. Conversiecode staat uit wanneer ingelogd in het CMS\r\n4. LESS CSS geupdate (succesmelding is nu inbegrepen)\r\n5. Required form text laten zien boven verzendbutton\r\n\r\n\r\n\r\nVardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...\r\ntitform.js aangepast voor disabled formuliervelden.",
     "keywords": [
         ""
     ],
@@ -238,21 +238,27 @@
                         "table": "formbuilder_formulieren",
                         "fields": {
                             "title": {
-                                "width": "236",
                                 "title": "Titel",
                                 "parser": "",
+                                "width": 172,
+                                "numeric": false
+                            },
+                            "subject": {
+                                "title": "Onderwerp van verstuurde e-mails",
+                                "parser": "",
+                                "width": 172,
                                 "numeric": false
                             },
                             "type": {
-                                "width": "236",
                                 "title": "Formulier type",
                                 "parser": "if($value == 'calculate-form'){     $value = 'Formulier in stappen'; } if($value == 'contact-form'){     $value = 'Standaard formulier'; }",
+                                "width": 172,
                                 "numeric": false
                             },
                             "language": {
-                                "width": "236",
                                 "title": "Taal",
                                 "parser": "",
+                                "width": 172,
                                 "numeric": false
                             }
                         },
@@ -274,10 +280,9 @@
                         "table": "formbuilder_formulieren",
                         "fields": [
                             {
-                                "column": "language",
-                                "type": "list",
                                 "title": "Taal",
                                 "subtitle": "",
+                                "type": "list",
                                 "options": {
                                     "list_type": "db",
                                     "allow-empty": "Yes",
@@ -286,32 +291,39 @@
                                     "pop-sort": "`title` ASC",
                                     "parser": "",
                                     "column": "language"
-                                }
+                                },
+                                "column": "language"
                             },
                             {
-                                "column": "title",
-                                "type": "text",
+                                "title": "Debugging mode",
+                                "subtitle": "verzend ingevulde formulieren wanneer ingelogd alleen naar terra-it",
+                                "type": "checkbox",
+                                "options": null,
+                                "column": "debug"
+                            },
+                            {
                                 "title": "Titel van formulier",
                                 "subtitle": "",
+                                "type": "text",
                                 "options": {
                                     "column": "title"
-                                }
+                                },
+                                "column": "title"
                             },
                             {
-                                "column": "comment",
-                                "type": "html",
                                 "title": "Korte tekst",
                                 "subtitle": "(bijvoorbeeld extra toelichting of instructies)",
+                                "type": "html",
                                 "options": {
                                     "simple_by_permission": "0",
                                     "column": "comment"
-                                }
+                                },
+                                "column": "comment"
                             },
                             {
-                                "column": "form_stages",
-                                "type": "matrix",
                                 "title": "Formulier secties / stappen",
                                 "subtitle": "",
+                                "type": "matrix",
                                 "options": {
                                     "max": "4",
                                     "style": "list",
@@ -340,13 +352,13 @@
                                         }
                                     ],
                                     "column": "form_stages"
-                                }
+                                },
+                                "column": "form_stages"
                             },
                             {
-                                "column": "type",
-                                "type": "list",
                                 "title": "Formulier sectie indeling",
                                 "subtitle": "meteen alle formulier secties tonen of in delen laten zien die pas zichtbaar worden na het invullen van de vorige?",
+                                "type": "list",
                                 "options": {
                                     "validation": "required",
                                     "list_type": "static",
@@ -364,40 +376,40 @@
                                     "pop-table": "",
                                     "parser": "",
                                     "column": "type"
-                                }
+                                },
+                                "column": "type"
                             },
                             {
-                                "column": "error_introduction",
-                                "type": "textarea",
                                 "title": "Foutmelding wanneer formulier verkeerd is ingevuld",
                                 "subtitle": "tekst boven opsomming van verkeerde / niet ingevulde velden",
+                                "type": "textarea",
                                 "options": {
                                     "column": "error_introduction"
-                                }
+                                },
+                                "column": "error_introduction"
                             },
                             {
-                                "column": "success_message",
-                                "type": "text",
                                 "title": "Succesmelding",
                                 "subtitle": "",
+                                "type": "text",
                                 "options": {
                                     "column": "success_message"
-                                }
+                                },
+                                "column": "success_message"
                             },
                             {
-                                "column": "email_from",
-                                "type": "text",
                                 "title": "E-mailadres waarmee het formulier mailt (noreply@bedrijfsnaam.nl raden wij aan)",
                                 "subtitle": "het e-mail adres waarmee ingevulde formulieren (naar u) worden gestuurd",
+                                "type": "text",
                                 "options": {
                                     "column": "email_from"
-                                }
+                                },
+                                "column": "email_from"
                             },
                             {
-                                "column": "image",
-                                "type": "upload",
                                 "title": "Logo",
                                 "subtitle": "logo voor in het e-mailbericht dat het formulier verstuurd",
+                                "type": "upload",
                                 "options": {
                                     "directory": "files/modules/",
                                     "image": "on",
@@ -415,65 +427,73 @@
                                         }
                                     ],
                                     "column": "image"
-                                }
+                                },
+                                "column": "image"
                             },
                             {
-                                "column": "subject",
-                                "type": "text",
                                 "title": "Onderwerp van e-mailberichten die het formulier vertuurd naar u",
                                 "subtitle": "onderwerp van de mail die u in uw mailbox krijgt wanneer iemand een formulier heeft ingevuld",
+                                "type": "text",
                                 "options": {
                                     "column": "subject"
-                                }
+                                },
+                                "column": "subject"
                             },
                             {
-                                "column": "email_to",
-                                "type": "text",
                                 "title": "E-mailadres waar de ingevulde formulieren heen worden gestuurd",
                                 "subtitle": "meestal uw eigen (bedrijfs) e-mailadres",
+                                "type": "text",
                                 "options": {
                                     "column": "email_to"
-                                }
+                                },
+                                "column": "email_to"
                             },
                             {
-                                "column": "return_title",
-                                "type": "text",
-                                "title": "E-mailbericht titel (Klant)",
-                                "subtitle": "Titel van de e-mail die naar de klant verstuurd word",
-                                "options": {
-                                    "column": "return_title"
-                                }
-                            },
-                            {
-                                "column": "reply_template",
-                                "type": "checkbox",
                                 "title": "E-mailbericht template",
-                                "subtitle": "dit e-mailbericht wordt verstuurd naar degene die het formulier heeft ingevuld op uw website",
+                                "subtitle": "Automatisch e-mailbericht sturen naar klant?",
+                                "type": "checkbox",
                                 "options": {
                                     "simple_by_permission": "0",
                                     "column": "reply_template"
-                                }
+                                },
+                                "column": "reply_template"
                             },
                             {
-                                "column": "button_text",
+                                "title": "E-mailbericht titel (Klant)",
+                                "subtitle": "Titel van de e-mail die naar de klant verstuurd word",
                                 "type": "text",
+                                "options": {
+                                    "column": "return_title"
+                                },
+                                "column": "return_title"
+                            },
+                            {
+                                "title": "Verplicht veld tekst (*= verplicht veld)",
+                                "subtitle": "",
+                                "type": "text",
+                                "options": {
+                                    "column": "required_text"
+                                },
+                                "column": "required_text"
+                            },
+                            {
                                 "title": "Button Tekst",
                                 "subtitle": "",
+                                "type": "text",
                                 "options": {
                                     "validation": "required",
                                     "sub_type": "",
                                     "max_length": "",
                                     "column": "button_text"
-                                }
+                                },
+                                "column": "button_text"
                             },
                             {
-                                "column": "required_text",
-                                "type": "text",
-                                "title": "Verplicht veld tekst (*= verplicht veld)",
-                                "subtitle": "",
-                                "options": {
-                                    "column": "required_text"
-                                }
+                                "title": "Conversie code",
+                                "subtitle": "conversie code voor als een formulier succesvol is verstuurd (bijv. Google Adwords)",
+                                "type": "com.fastspot.rawtext-field-types*raw-textarea",
+                                "options": null,
+                                "column": "conversion_code"
                             }
                         ],
                         "default_position": "Bottom",
@@ -713,12 +733,30 @@
         "callouts": [],
         "settings": [],
         "feeds": [],
-        "field_types": [],
+        "field_types": [
+            {
+                "id": "com.fastspot.rawtext-field-types*raw-textarea",
+                "name": "Raw Text Area",
+                "use_cases": {
+                    "templates": "on",
+                    "modules": "on",
+                    "callouts": "on",
+                    "settings": "on"
+                },
+                "self_draw": null,
+                "extension": "com.fastspot.rawtext-field-types"
+            }
+        ],
         "tables": {
-            "formbuilder_formulieren": "CREATE TABLE `formbuilder_formulieren` (   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,   `title` varchar(255) DEFAULT NULL,   `language` varchar(255) DEFAULT NULL,   `type` varchar(255) DEFAULT NULL,   `subject` varchar(255) DEFAULT NULL,   `email_to` varchar(255) DEFAULT NULL,   `email_from` varchar(255) DEFAULT NULL,   `image` varchar(255) NOT NULL,   `fields_stage_1` text,   `form_stages` text,   `comment` text,   `reply_template` mediumtext NOT NULL,   `button_text` varchar(255) NOT NULL DEFAULT 'Verzenden',   `error_introduction` text,   `success_message` varchar(255) NOT NULL DEFAULT 'Uw bericht is succesvol verzonden',   `return_title` varchar(255) NOT NULL,   `approved` char(2) NOT NULL DEFAULT 'on',   `position` int(11) NOT NULL,   `required_text` varchar(255) DEFAULT '* = verplicht veld',   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
+            "formbuilder_formulieren": "CREATE TABLE `formbuilder_formulieren` (   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,   `title` varchar(255) DEFAULT NULL,   `language` varchar(255) DEFAULT NULL,   `type` varchar(255) DEFAULT NULL,   `subject` varchar(255) DEFAULT NULL,   `email_to` varchar(255) DEFAULT NULL,   `email_from` varchar(255) DEFAULT NULL,   `image` varchar(255) NOT NULL,   `fields_stage_1` text,   `form_stages` text,   `comment` text,   `reply_template` mediumtext NOT NULL,   `button_text` varchar(255) NOT NULL DEFAULT 'Verzenden',   `error_introduction` text,   `success_message` varchar(255) NOT NULL DEFAULT 'Uw bericht is succesvol verzonden',   `return_title` varchar(255) NOT NULL,   `approved` char(2) NOT NULL DEFAULT 'on',   `position` int(11) NOT NULL,   `required_text` varchar(255) DEFAULT '* = verplicht veld',   `conversion_code` text,   `debug` varchar(255) DEFAULT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
             "formbuilder_formuliervelden": "CREATE TABLE `formbuilder_formuliervelden` (   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,   `title` varchar(255) DEFAULT NULL,   `usable_title` varchar(255) NOT NULL,   `type` varchar(255) DEFAULT NULL,   `sub_fields` text NOT NULL,   `required` varchar(255) DEFAULT NULL,   `error` text,   `approved` char(2) NOT NULL DEFAULT 'on',   `position` int(11) NOT NULL,   `language` varchar(255) DEFAULT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8",
             "languages": "CREATE TABLE `languages` (   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,   `title` varchar(255) DEFAULT NULL,   `country_flag` varchar(255) DEFAULT NULL,   `short_title` varchar(255) DEFAULT NULL,   `root_page_id` varchar(255) DEFAULT NULL,   `approved` char(2) NOT NULL,   `position` int(11) NOT NULL,   PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8"
         }
     },
-    "sql_revisions": []
+    "sql_revisions": {
+        "15": [
+            "ALTER TABLE `formbuilder_formulieren` ADD COLUMN `conversion_code` text NULL AFTER `required_text`",
+            "ALTER TABLE `formbuilder_formulieren` ADD COLUMN `debug` varchar(255) NULL DEFAULT NULL AFTER `conversion_code`"
+        ]
+    }
 }
