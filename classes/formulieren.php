@@ -612,7 +612,12 @@ class TitForm extends BigTreeModule {
                         <p class="required-form-text"><?=$formItems['required_text']?></p>
                     <?}?>
 					<button type="submit" class="btn-green-send-s <?=$buttonDisabled?> content-button" name="form-submit"><?=$formItems['button_text']?></button>
-				</div>
+                    <?
+                    if (isset($_SESSION['bigtree_admin']['email'])){?>
+                        <a href="<?=ADMIN_ROOT?>com.terra-it.tit-form.builder*formulieren/edit/<?=$formItems['id']?>">Edit this form</a>
+                    <?}
+                    ?>
+                </div>
 			</div>
 			</div>
 		</form>
