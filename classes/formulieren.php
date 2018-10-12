@@ -8,6 +8,9 @@
  */
 
 //Changelog
+//12-10-2018
+//Ook textarea krijgt een class met disabled
+//Button om te bewerken toegevoegd
 //01-10-2018
 //1. Conversiecode optie toegevoegd
 //2. Debugging optie toegevoegd:
@@ -490,7 +493,7 @@ class TitForm extends BigTreeModule {
                                                                 echo '</div></div>';
                                                                 break;
                                                             case 'textarea':
-                                                                echo('<div class="form-input-group"><textarea class="field-item data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '>' . $post[$rtitle] . '</textarea></div>');
+                                                                echo('<div class="form-input-group"><textarea class="field-item '.$disabled.' data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '>' . $post[$rtitle] . '</textarea></div>');
                                                                 break;
                                                             case 'radio':
                                                                 echo '<div class="form-input-group">';
@@ -581,7 +584,7 @@ class TitForm extends BigTreeModule {
                                                                 }
                                                                 break;
                                                             case 'date':
-                                                                echo('<div class="form-input-group date-group"><label><p>'.$fieldItem['title'].'</p><input class="field-item data-hj-whitelist'.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="Kies datum: " ' . $required . '></label></div>');
+                                                                echo('<div class="form-input-group date-group"><label>'.$fieldItem['title'].'<input class="field-item data-hj-whitelist'.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="Kies datum: " ' . $required . '></label></div>');
                                                                 break;
                                                             case 'upload':
                                                                 echo '<p>'.$fieldItem['title'].'</p>';
