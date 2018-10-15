@@ -584,7 +584,7 @@ class TitForm extends BigTreeModule {
                                                                 }
                                                                 break;
                                                             case 'date':
-                                                                echo('<div class="form-input-group date-group"><label>'.$fieldItem['title'].'<input class="field-item data-hj-whitelist'.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="Kies datum: " ' . $required . '></label></div>');
+                                                                echo('<div class="form-input-group date-group"><label>'.$fieldItem['title'].'<input class="field-item date data-hj-whitelist'.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="Kies datum: " ' . $required . '></label></div>');
                                                                 break;
                                                             case 'upload':
                                                                 echo '<p>'.$fieldItem['title'].'</p>';
