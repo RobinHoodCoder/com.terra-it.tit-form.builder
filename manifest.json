@@ -1,11 +1,11 @@
 {
     "type": "extension",
     "id": "com.terra-it.tit-form.builder",
-    "version": "0.15.2",
-    "revision": 21,
+    "version": "0.15.21",
+    "revision": 22,
     "compatibility": "4.2+",
     "title": "FormBuilder",
-    "description": "15-10-2018:\r\nDatepicker klaargemaakt\r\n\r\nChangelog 01-10-2018:\r\n1. Conversiecode optie toegevoegd\r\n2. Debugging optie toegevoegd:\r\nwann. ingelogd alleen ingevulde formulieren naar\r\ningelogde gebruiker sturen\r\n3. Conversiecode staat uit wanneer ingelogd in het CMS\r\n4. LESS CSS geupdate (succesmelding is nu inbegrepen)\r\n5. Required form text laten zien boven verzendbutton\r\n\r\n\r\n\r\nVardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...\r\ntitform.js aangepast voor disabled formuliervelden.",
+    "description": "17-10-2018:\r\nvardump weggehaald\r\n\r\n15-10-2018:\r\nDatepicker klaargemaakt\r\n\r\nChangelog 01-10-2018:\r\n1. Conversiecode optie toegevoegd\r\n2. Debugging optie toegevoegd:\r\nwann. ingelogd alleen ingevulde formulieren naar\r\ningelogde gebruiker sturen\r\n3. Conversiecode staat uit wanneer ingelogd in het CMS\r\n4. LESS CSS geupdate (succesmelding is nu inbegrepen)\r\n5. Required form text laten zien boven verzendbutton\r\n\r\n\r\n\r\nVardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...\r\ntitform.js aangepast voor disabled formuliervelden.",
     "keywords": [
         ""
     ],

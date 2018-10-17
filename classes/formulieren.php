@@ -40,11 +40,7 @@
 
 // Insert javascript in de head
 //require('required/insert_js.php');
-var_dump($form);
-
-
 class mailTemplater{
-
     public function getMailTemplate($type){
         global $bigtree;
         $default = 'default.php';
