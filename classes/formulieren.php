@@ -535,19 +535,23 @@ class TitForm extends BigTreeModule {
 
                                                                         // Input value als form errors aanwezig zijn
                                                                         if (isset($post) && in_array($rtitle, $post)) {
-                                                                            echo('<div>
+                                                                            echo('
+                                                                            <div>
                                                                                <label class="cbox-label" for="'.$rtitle.'">
                                                                                 <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . ' checked>
                                                                                     <span>' . $checkboxField['title'] . '</span>'.'
+                                                                                    <div class="cleared"></div>
                                                                                 </label>
-                                                                                </div>');
+                                                                            </div>');
                                                                         } else {
-                                                                            echo('<div>
+                                                                            echo('
+                                                                            <div>
                                                                                 <label class="cbox-label" for="'.$rtitle.'">
                                                                                     <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . '>
-                                                                                    <span>' . $checkboxField['title'] . '</span>                                                                                
+                                                                                    <span>' . $checkboxField['title'] . '</span>
+                                                                                    <div class="cleared"></div>                                                                               
                                                                                 </label>
-                                                                                </div>');
+                                                                            </div>');
                                                                         }
                                                                     }
                                                                     echo ('
