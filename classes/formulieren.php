@@ -520,44 +520,46 @@ class TitForm extends BigTreeModule {
                                                                 }
                                                                 break;
                                                             case 'checkbox':
-                                                                echo (!empty($fieldItem['title'])) ? '<div class="form-input-group">
-                                                                <p>' . $fieldItem['title'].$star.'</p>' : '';
+                                                                echo (!empty($fieldItem['title'])) ? '
+                                                                <div class="form-input-group">
+                                                                    <p>' . $fieldItem['title'].$star.'</p>' : '';
 
-                                                                if (count($fieldItem['sub_fields']) > 1) {
-                                                                    $chbxTitle = $fieldItem['title'];
-                                                                } else {
-                                                                    $chbxTitle = $fieldItem['title'];
-                                                                }
-                                                                echo ('
-                                                                <fieldset class="field-item">
-                                                                    <div class="contain-cbox">');
-                                                                    foreach ($fieldItem['sub_fields'] as $checkboxField) {
-                                                                        $rtitle = str_replace(' ', '_', $checkboxField['title']);
-
-                                                                        // Input value als form errors aanwezig zijn
-                                                                        if (isset($post) && in_array($rtitle, $post)) {
-                                                                            echo('
-                                                                            <div>
-                                                                               <label class="cbox-label" for="'.$rtitle.'">
-                                                                                <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . ' checked>
-                                                                                    <span>' . $checkboxField['title'] . '</span>'.'
-                                                                                    <div class="cleared"></div>
-                                                                                </label>
-                                                                            </div>');
-                                                                        } else {
-                                                                            echo('
-                                                                            <div>
-                                                                                <label class="cbox-label" for="'.$rtitle.'">
-                                                                                    <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . '>
-                                                                                    <span>' . $checkboxField['title'] . '</span>
-                                                                                    <div class="cleared"></div>                                                                               
-                                                                                </label>
-                                                                            </div>');
-                                                                        }
+                                                                    if (count($fieldItem['sub_fields']) > 1) {
+                                                                        $chbxTitle = $fieldItem['title'];
+                                                                    } else {
+                                                                        $chbxTitle = $fieldItem['title'];
                                                                     }
                                                                     echo ('
-                                                                    </div>
-                                                                </fieldset>
+                                                                    <fieldset class="field-item">
+                                                                        <div class="contain-cbox">');
+                                                                        foreach ($fieldItem['sub_fields'] as $checkboxField) {
+                                                                            $rtitle = str_replace(' ', '_', $checkboxField['title']);
+
+                                                                            // Input value als form errors aanwezig zijn
+                                                                            if (isset($post) && in_array($rtitle, $post)) {
+                                                                                echo('
+                                                                                <div>
+                                                                                   <label class="cbox-label" for="'.$rtitle.'">
+                                                                                    <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . ' checked>
+                                                                                        <span>' . $checkboxField['title'] . '</span>'.'
+                                                                                        <div class="cleared"></div>
+                                                                                    </label>
+                                                                                </div>');
+                                                                            } else {
+                                                                                echo('
+                                                                                <div>
+                                                                                    <label class="cbox-label" for="'.$rtitle.'">
+                                                                                        <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . '>
+                                                                                        <span>' . $checkboxField['title'] . '</span>
+                                                                                        <div class="cleared"></div>                                                                               
+                                                                                    </label>
+                                                                                </div>');
+                                                                            }
+                                                                        }
+                                                                        echo ('
+                                                                        </div>
+                                                                    </fieldset>
+                                                                </div>
                                                                 ');
                                                                 break;
                                                             case 'select':
