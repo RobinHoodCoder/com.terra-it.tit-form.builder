@@ -520,7 +520,8 @@ class TitForm extends BigTreeModule {
                                                                 }
                                                                 break;
                                                             case 'checkbox':
-                                                                echo (!empty($fieldItem['title'])) ? '<div class="form-input-group"><strong>' . $fieldItem['title'].$star.'</strong>' : '';
+                                                                echo (!empty($fieldItem['title'])) ? '<div class="form-input-group">
+                                                                <p>' . $fieldItem['title'].$star.'</p>' : '';
 
                                                                 if (count($fieldItem['sub_fields']) > 1) {
                                                                     $chbxTitle = $fieldItem['title'];
