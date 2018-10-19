@@ -527,27 +527,33 @@ class TitForm extends BigTreeModule {
                                                                 } else {
                                                                     $chbxTitle = $fieldItem['title'];
                                                                 }
-                                                                echo ('<fieldset class="field-item"><div class="contain-cbox">');
-                                                                foreach ($fieldItem['sub_fields'] as $checkboxField) {
-                                                                    $rtitle = str_replace(' ', '_', $checkboxField['title']);
+                                                                echo ('
+                                                                <fieldset class="field-item">
+                                                                    <div class="contain-cbox">');
+                                                                    foreach ($fieldItem['sub_fields'] as $checkboxField) {
+                                                                        $rtitle = str_replace(' ', '_', $checkboxField['title']);
 
-                                                                    // Input value als form errors aanwezig zijn
-                                                                    if (isset($post) && in_array($rtitle, $post)) {
-                                                                        echo('<div>
-                                                                           <label class="cbox-label" for="'.$rtitle.'">
-                                                                            <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . ' checked>
-                                                                                <span></span>
-                                                                                ' . $checkboxField['title'] . '
-                                                                            </label></div>');
-                                                                    } else {
-                                                                        echo('<div><label class="cbox-label" for="'.$rtitle.'">
-                                                                            <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . '>
-                                                                            <span></span>
-                                                                                ' . $checkboxField['title'] . '
-                                                                            </label></div>');
+                                                                        // Input value als form errors aanwezig zijn
+                                                                        if (isset($post) && in_array($rtitle, $post)) {
+                                                                            echo('<div>
+                                                                               <label class="cbox-label" for="'.$rtitle.'">
+                                                                                <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . ' checked>
+                                                                                    <span>' . $checkboxField['title'] . '</span>'.'
+                                                                                </label>
+                                                                                </div>');
+                                                                        } else {
+                                                                            echo('<div>
+                                                                                <label class="cbox-label" for="'.$rtitle.'">
+                                                                                    <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . '>
+                                                                                    <span>' . $checkboxField['title'] . '</span>                                                                                
+                                                                                </label>
+                                                                                </div>');
+                                                                        }
                                                                     }
-                                                                }
-                                                                echo ('</fieldset></div>');
+                                                                    echo ('
+                                                                    </div>
+                                                                </fieldset>
+                                                                ');
                                                                 break;
                                                             case 'select':
                                                                 echo (!empty($fieldItem['title'])) ? '<div class="form-input-group"><label for="'.$fieldItem['title'].'">' . $fieldItem['title'].$star.'</label>' : '';
