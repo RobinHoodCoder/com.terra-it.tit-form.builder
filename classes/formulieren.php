@@ -489,7 +489,9 @@ class TitForm extends BigTreeModule {
                                                                 echo '</div></div>';
                                                                 break;
                                                             case 'textarea':
-                                                                echo('<div class="form-input-group"><textarea class="field-item '.$disabled.' data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '>' . $post[$rtitle] . '</textarea></div>');
+                                                                echo('<div class="form-input-group">
+                                                                        <textarea class="field-item data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '>' . $post[$rtitle] . '</textarea>
+                                                                    </div>');
                                                                 break;
                                                             case 'radio':
                                                                 echo '<div class="form-input-group">';
