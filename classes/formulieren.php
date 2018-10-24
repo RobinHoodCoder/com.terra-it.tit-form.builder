@@ -125,10 +125,12 @@ class TitForm extends BigTreeModule {
         }
 
         if ($formItems['type'] == 'calculate-form'){
+            $formType = 'multipart-form';
             $formClass = 'calculate-item';
             $disabled = 'style="display:none;"';
             $buttonDisabled = 'disabled-button';
         }else{
+            $formType = 'single-form';
             $formClass = '';
             $disabled = '';
             $buttonDisabled = '';
@@ -394,7 +396,7 @@ class TitForm extends BigTreeModule {
 
 
 
-		<form action="" method="post" class="contact-form" enctype="multipart/form-data">
+		<form class="<?= $formType?>" action="" method="post" class="contact-form" enctype="multipart/form-data">
 			<div class="grid">
 				<div>
 					<input type="hidden" name="form_send" value="true"/>
@@ -433,7 +435,7 @@ class TitForm extends BigTreeModule {
 
                                 // Show stage titel
                                 if(isset($stageItem['title']) && !empty($stageItem['title']) && (!$stageItem['hide_title'])){
-                                    echo '<div></div><div class="form-input-group"><h3>'.$stageItem['title'].'</h3></div>';
+                                    echo '<div></div><div class="form-input-group-title"><h3>'.$stageItem['title'].'</h3></div>';
                                 }
                                 if($stageItem['hide_title'] === 'on'){?>
 									<div class="form-spacer"></div>
@@ -496,7 +498,7 @@ class TitForm extends BigTreeModule {
                                                             case 'radio':
                                                                 echo '<div class="form-input-group">';
                                                                 echo (!empty($fieldItem['title'])) ? '<p>' . $fieldItem['title'].$star.'</p>' : '';
-                                                                echo ('<radiogroup class="field-item">');
+                                                                echo ('<radiogroup>');
                                                                 foreach ($fieldItem['sub_fields'] as $radioField) {
                                                                     $rtitle = str_replace(' ', '_', $radioField['title']);
 
@@ -511,9 +513,9 @@ class TitForm extends BigTreeModule {
                                                                     }
                                                                     // Input value als form errors aanwezig zijn
                                                                     if (isset($post) && in_array($rtitle, $post)) {
-                                                                        echo('<div class="contain-radio"><input class="data-hj-whitelist '.$fieldItem['type'].'  '. $openInput .'" type="radio" name="' . $fieldItem['title'] . '" id="' . $radioField['title'] . '" value="' . $radioField['title'] . '" ' . $required . ' checked/><label for="' . $radioField['title'] . '">' . $radioField['title'] . '</label></div>');
+                                                                        echo('<div class="contain-radio"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'  '. $openInput .'" type="radio" name="' . $fieldItem['title'] . '" id="' . $radioField['title'] . '" value="' . $radioField['title'] . '" ' . $required . ' checked/><label for="' . $radioField['title'] . '">' . $radioField['title'] . '</label></div>');
                                                                     } else {
-                                                                        echo('<div class="contain-radio"><input class="data-hj-whitelist '.$fieldItem['type'].'  '. $openInput .'" type="radio" name="' . $fieldItem['title'] . '" id="' . $radioField['title'] . '" value="' . $radioField['title'] . '" ' . $required . '/><label for="' . $radioField['title'] . '">' . $radioField['title'] . '</label></div>');
+                                                                        echo('<div class="contain-radio"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'  '. $openInput .'" type="radio" name="' . $fieldItem['title'] . '" id="' . $radioField['title'] . '" value="' . $radioField['title'] . '" ' . $required . '/><label for="' . $radioField['title'] . '">' . $radioField['title'] . '</label></div>');
                                                                     }
                                                                 }
                                                                 echo ('</radiogroup></div>');
@@ -532,7 +534,7 @@ class TitForm extends BigTreeModule {
                                                                         $chbxTitle = $fieldItem['title'];
                                                                     }
                                                                     echo ('
-                                                                    <fieldset class="field-item">
+                                                                    
                                                                         <div class="contain-cbox">');
                                                                         foreach ($fieldItem['sub_fields'] as $checkboxField) {
                                                                             $rtitle = str_replace(' ', '_', $checkboxField['title']);
@@ -542,7 +544,7 @@ class TitForm extends BigTreeModule {
                                                                                 echo('
                                                                                 <div>
                                                                                    <label class="cbox-label" for="'.$rtitle.'">
-                                                                                    <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . ' checked>
+                                                                                    <input class="field-item checkbox data-hj-whitelist '.$fieldItem['type'].'" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . ' checked>
                                                                                         <span>' . $checkboxField['title'] . '</span>'.'
                                                                                         <div class="cleared"></div>
                                                                                     </label>
@@ -560,7 +562,7 @@ class TitForm extends BigTreeModule {
                                                                         }
                                                                         echo ('
                                                                         </div>
-                                                                    </fieldset>
+                                                                   
                                                                 </div>
                                                                 ');
                                                                 break;
