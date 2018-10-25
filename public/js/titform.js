@@ -131,8 +131,14 @@ window.onload = function() {
 
 
         //Maak verzendbutton niet meer disabled bij aanpassen ALLERlaatste inputveld
-        var lastInput = $(this).find('.calculate-item input').last();
-        $(this).find(lastInput).change(function(){
+        var lastFormItem = $(this).find('.form-item').last();
+        console.log($(lastFormItem));
+
+        var lastFormIteme = $(lastFormItem).find('.form-input-group');
+        console.log(lastFormIteme);
+
+        $(lastFormItem).find('.form-input-group').last().find('.field-item').change(function(){
+            console.log('Er is iets veranderd in het laatste veld!!');
             $('.disabled-button').prop('disabled', false); //makes it enabled
             $('form button').removeClass('disabled-button');
         });
