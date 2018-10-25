@@ -58,9 +58,23 @@ window.onload = function() {
         * */
         // -----------
         // Zet een class op de aangeklikte checkbox!
-        $(this).find('.checkbox').change(function(){
-            $(this).parent().toggleClass('checked-label');
+        var cboxContainer = $(this).find('.contain-cbox .field-item').each(function (i,fieldItem) {
+            $(fieldItem).change(function(){
+                $(this).toggleClass('checked');
+            });
         });
+
+        // cboxContainer.each(function (i,e) {
+        //     $(this).change(function () {
+        //         $(this).toggleClass('checked');
+        //     })
+        // });
+
+
+
+        // $(this)(cboxContainer).find('.checkbox').change(function(){
+        //     $(this).toggleClass('checked');
+        // });
 
         //Zet een class op het laatste form item (Formulier Sectie!!) en zet de class "last-form-group erop!"
         $(this).find('.form-item').each(function(i, e){
@@ -70,7 +84,7 @@ window.onload = function() {
         //Check of een checkboxveld veranderd.
         $(this).find(".contain-cbox").change(function() {
             var containerBox =  $(this);
-            var foundItem = $(this).find('.checked-label');
+            var foundItem = $(this).find('.checked');
             var nextGroup = containerBox.parents().next('.form-input-group');
             if (foundItem.length === 0){
                 // console.log('Geen gechecked items!!!');
@@ -79,6 +93,7 @@ window.onload = function() {
                 nextField.attr('disabled', true);
             }
             if (foundItem.length >= 1){
+                
                 // console.log('Er zijn gecheckede items!!!');
                 nextGroup.find('.field-item').removeClass('disabled');
                 nextGroup.find('.field-item').attr('disabled', false);
