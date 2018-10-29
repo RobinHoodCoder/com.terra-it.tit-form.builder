@@ -31,7 +31,7 @@ window.onload = function() {
     /*------------------------
    Prijsbereken formulierfuncties!!
    --------------------*/
-    $('.multipart-form').each(function(){
+    $('.multipart-form').each(function(i, currentForm){
 
         //1. Dit zijn de input velden die die disabled moeten zijn..
         inputs = $(this).find('input,select,textarea,button' );
@@ -52,57 +52,92 @@ window.onload = function() {
             // $(firstInputGroup).find('.field-item').removeClass('disabled').attr('disabled',false);
         });
 
-        /*
-        * Maak veld na checkboxes actief na het aanklikken van 1 item.
-        * Na uitklikken maak je het weer inactief
-        * */
-        // -----------
-        // Zet een class op de aangeklikte checkbox!
-        var cboxContainer = $(this).find('.contain-cbox .field-item').each(function (i,fieldItem) {
-            $(fieldItem).change(function(){
-                $(this).toggleClass('checked');
-            });
-        });
-
-        // cboxContainer.each(function (i,e) {
-        //     $(this).change(function () {
-        //         $(this).toggleClass('checked');
-        //     })
-        // });
-
-
-
-        // $(this)(cboxContainer).find('.checkbox').change(function(){
-        //     $(this).toggleClass('checked');
-        // });
-
         //Zet een class op het laatste form item (Formulier Sectie!!) en zet de class "last-form-group erop!"
         $(this).find('.form-item').each(function(i, e){
             $(this).children('.form-input-group').last().addClass('last-form-group');
         });
 
-        //Check of een checkboxveld veranderd.
-        $(this).find(".contain-cbox").change(function() {
-            var containerBox =  $(this);
-            var foundItem = $(this).find('.checked');
-            var nextGroup = containerBox.parents().next('.form-input-group');
-            if (foundItem.length === 0){
-                // console.log('Geen gechecked items!!!');
-                nextField = nextGroup.find('.field-item');
-                nextField.addClass('disabled');
-                nextField.attr('disabled', true);
-            }
-            if (foundItem.length >= 1){
-                
-                // console.log('Er zijn gecheckede items!!!');
-                nextGroup.find('.field-item').removeClass('disabled');
-                nextGroup.find('.field-item').attr('disabled', false);
-            }
+        /*
+        * Maak veld na checkboxes actief na het aanklikken van 1 item.
+        * Na uitklikken maak je het weer inactief
+        * */
+        // -----------
+
+        $(this).find('.contain-cbox').each(function (i,fieldItem) {
+            $(fieldItem).find('.field-item').change(function(){
+                $(this).toggleClass('checked');
+            });
         });
 
-        /*
-   * Als er iets is veranderd in aeeen niet-checkbox veld, maak dan het volgende item actief.
-   * */
+        function makeDisabled(element, boolean){
+            $(element).attr('disabled', boolean);
+            if(boolean === true) element.addClass('disabled');
+            else{element.removeClass('disabled');}
+        }
+
+
+
+        $('.field-item').change(function(){
+
+            //Dit is allleeen voor chexbokses
+            if ($(this).is('input[type=checkbox]')){
+                var cboxContainer = $(this).parents('.contain-cbox');
+                $(cboxContainer).find('.field-item').each(function (index, element) {
+
+
+                    if($(element).parents('.form-input-group.last-form-group').length !== 0){
+
+                    }else{
+                        var nextInputGroup = $(element).parents('.form-input-group').next();
+                        var nexInputs = nextInputGroup.find('.field-item');
+                        console.log(element);
+
+                        //Als er een checked checkbox in de betreffende container zit, zoek dan de volgende
+                        //-form input group en maak die bewerkbaar
+                        var checkedbox = $(cboxContainer).find('.checked');
+
+
+                        if(checkedbox.length === 0){
+                            makeDisabled($(nexInputs),true);
+                            //$(nexInputs).attr('disabled', true).addClass('disabled');
+                        }else{
+                            makeDisabled($(nexInputs),false);
+                        }
+                    }
+
+                });
+            }
+
+
+        });
+
+        //$(nextFormStep).slideDown(150, "swing").addClass('active-step');
+
+        //Check of een checkboxveld veranderd.
+        //OLD OFFICIALL---------------------------------------------
+        // $(this).find(".contain-cbox").change(function() {
+        //     var containerBox =  $(this);
+        //     var foundItem = $(this).find('.checked');
+        //     var nextGroup = containerBox.parents().next('.form-input-group');
+        //     if (foundItem.length === 0){
+        //         // console.log('Geen gechecked items!!!');
+        //         nextField = nextGroup.find('.field-item');
+        //         nextField.addClass('disabled');
+        //         nextField.attr('disabled', true);
+        //     }
+        //     if (foundItem.length >= 1){
+        //
+        //         // console.log('Er zijn gecheckede items!!!');
+        //         nextGroup.find('.field-item').removeClass('disabled');
+        //         nextGroup.find('.field-item').attr('disabled', false);
+        //     }
+        // });
+
+
+
+            /*
+       * Als er iets is veranderd in NIET-checkbox veld, maak dan het volgende item actief.
+       * */
 
         $(this).find(".field-item" ).not('.checkbox').change(function() {
             //$Nexttfield is alle inputvelden in het volgende field item!!
@@ -122,9 +157,16 @@ window.onload = function() {
         * TODO: Als laatste element van een item een checkox is, wat dan?
         *  last form group moet specifieker.. last-form group > een input, textfield of whatever...
         * */
-        $(this).find(".form-item .last-form-group").click(function() {
-            console.log(this);
+        $(this).find(".form-item .last-form-group").change(function() {
+
+
+            var formSections = $(currentForm).find('.form-item');
+
+
+
+
             var lastItem = $(this).find('.field-item');
+
 
             if($(lastItem).hasClass('disabled')) {
                 //DOE NIETS als laatste element nog niet aanklikbaar is!!
@@ -135,6 +177,10 @@ window.onload = function() {
                 $(this).parents('.form-item').addClass('done');
 
                 var nextFormStep =  $(this).parents('.done').next('.form-item');
+
+
+
+
 
                 // MAak het volgende stap in formulier zichtbaar
                 $(nextFormStep).slideDown(150, "swing").addClass('active-step');

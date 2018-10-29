@@ -145,6 +145,7 @@ class TitForm extends BigTreeModule {
             }
             // Verkrijg de juiste velden uit de mess
             foreach($stages as $stage){
+                $stageCount = count($stage);
                 if(is_array($stage)){
                     foreach($stage as $stageItem){
                         if (isset($stageItem['section'])){
@@ -153,6 +154,7 @@ class TitForm extends BigTreeModule {
                     }
                 }
             }
+
 
             // Veldjes loopen for required voor form opbouw
             if (isset($fields)){
@@ -418,41 +420,46 @@ class TitForm extends BigTreeModule {
 					</div>
 
                     <?
+
                     $amount = count($fields);
 
                     // Uit hoeveel onderdelen bestaat dit formulier? lets find out!
-                    if ($amount == 1){
+                    if ($amount === 1){
                         echo '<div class="col-12 col-medium-12 col-small-12 col-mobile-12 form-item">';
                     }
                     if($amount > 1){
                         echo '<div class="col-6 col-small-12 col-mobile-12 form-item first-item">';
                     }
+
                     $i=0;
                     foreach($stages as $stage){
 
+
+
                         if(is_array($stage)){
+
+                            //var_dump($stage);
                             foreach($stage as $stageItem){
+                                $i++;
 
                                 // Show stage titel
                                 if(isset($stageItem['title']) && !empty($stageItem['title']) && (!$stageItem['hide_title'])){
-                                    echo '<div></div><div class="form-input-group-title"><h3>'.$stageItem['title'].'</h3></div>';
+                                    echo '<div class="form-input-group-title"><h3>'.$stageItem['title'].'</h3></div>';
                                 }
                                 if($stageItem['hide_title'] === 'on'){?>
 									<div class="form-spacer"></div>
                                 <?}
 
                                 // Tel op en loop
-                                $i++;
+
                                 if (isset($stageItem['section'])) {
                                     foreach ($stageItem['section'] as $section) {
-
                                         if (isset($fieldItems)) {
                                             $check = array();
                                             foreach ($fieldItems as $fieldItem) {
                                                 if (isset($fieldItem['id']) && $fieldItem['id'] == $section) {
                                                     // Zorg voor alleen unieke velden
                                                     if (!in_array($fieldItem[0], $check)) {
-
                                                         $rtitle = str_replace(' ', '_', $fieldItem['title']);
 
                                                         if($fieldItem['required'] == 'on'){
@@ -526,6 +533,7 @@ class TitForm extends BigTreeModule {
                                                             case 'checkbox':
                                                                 echo (!empty($fieldItem['title'])) ? '
                                                                 <div class="form-input-group">
+                                                                
                                                                     <p>' . $fieldItem['title'].$star.'</p>' : '';
 
                                                                     if (count($fieldItem['sub_fields']) > 1) {
@@ -611,9 +619,12 @@ class TitForm extends BigTreeModule {
                                         }
                                     }
                                 }
-                                if($i < 4){
+                                if($i < $amount){
                                     echo '</div><div class="col-6 col-small-12 col-mobile-12 form-item '.$formClass.'" '.$disabled.'>';
-                                }elseif($i <= 1){
+                                }elseif($i === $amount){
+                                    echo '</div>';
+                                }
+                                elseif($i <= 1){
 
                                 }
 
