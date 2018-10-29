@@ -623,7 +623,6 @@ class TitForm extends BigTreeModule {
                                     echo '</div><div class="col-6 col-small-12 col-mobile-12 form-item '.$formClass.'" '.$disabled.'>';
                                 }elseif($i === $amount){
 
-
                                 }
                                 elseif($i <= 1){
 
