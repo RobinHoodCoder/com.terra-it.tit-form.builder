@@ -1,11 +1,11 @@
 {
     "type": "extension",
     "id": "com.terra-it.tit-form.builder",
-    "version": "0.15.43",
-    "revision": 34,
+    "version": "0.15.44",
+    "revision": 36,
     "compatibility": "4.2+",
     "title": "FormBuilder",
-    "description": "24-10-2018:\r\nJavascript aangepast voor het prijsberekenformulier.\r\nStappen zijn nu duidelijker qua actieve formulier sectie en volgende formulier sectie. Checkboxes aanklikken maakt volgende formulier input aanklikbaar. Er is nu 1 checkbox verplicht om in te vullen.\r\n\r\n22-10-2018:\r\nTextarea bug opgelost. Er stond display:none op. In plaats van een class die disabled heet.\r\n\r\n19-10-2018:\r\nCheckboxes container aangepast.\r\nTitels boven checkboxes staan nu in een p, zoals de rest van de field item titels.\r\n\r\n17-10-2018:\r\nvardump weggehaald\r\n\r\n15-10-2018:\r\nDatepicker klaargemaakt\r\n\r\nChangelog 01-10-2018:\r\n1. Conversiecode optie toegevoegd\r\n2. Debugging optie toegevoegd:\r\nwann. ingelogd alleen ingevulde formulieren naar\r\ningelogde gebruiker sturen\r\n3. Conversiecode staat uit wanneer ingelogd in het CMS\r\n4. LESS CSS geupdate (succesmelding is nu inbegrepen)\r\n5. Required form text laten zien boven verzendbutton\r\n\r\n\r\n\r\nVardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...\r\ntitform.js aangepast voor disabled formuliervelden.",
+    "description": "24-10-2018:\r\nExtra (lege) calculate item weggehaald.\r\n\r\n24-10-2018:\r\nJavascript aangepast voor het prijsberekenformulier.\r\nStappen zijn nu duidelijker qua actieve formulier sectie en volgende formulier sectie. Checkboxes aanklikken maakt volgende formulier input aanklikbaar. Er is nu 1 checkbox verplicht om in te vullen.\r\n\r\n22-10-2018:\r\nTextarea bug opgelost. Er stond display:none op. In plaats van een class die disabled heet.\r\n\r\n19-10-2018:\r\nCheckboxes container aangepast.\r\nTitels boven checkboxes staan nu in een p, zoals de rest van de field item titels.\r\n\r\n17-10-2018:\r\nvardump weggehaald\r\n\r\n15-10-2018:\r\nDatepicker klaargemaakt\r\n\r\nChangelog 01-10-2018:\r\n1. Conversiecode optie toegevoegd\r\n2. Debugging optie toegevoegd:\r\nwann. ingelogd alleen ingevulde formulieren naar\r\ningelogde gebruiker sturen\r\n3. Conversiecode staat uit wanneer ingelogd in het CMS\r\n4. LESS CSS geupdate (succesmelding is nu inbegrepen)\r\n5. Required form text laten zien boven verzendbutton\r\n\r\n\r\n\r\nVardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...\r\ntitform.js aangepast voor disabled formuliervelden.",
     "keywords": [
         ""
     ],
@@ -86,29 +86,29 @@
                             "title": {
                                 "title": "Title",
                                 "parser": "",
-                                "width": 172,
-                                "numeric": false
+                                "width": "172",
+                                "numeric": ""
                             },
                             "country_flag": {
                                 "title": "Country Flag",
                                 "parser": "",
-                                "width": 172,
-                                "numeric": false
+                                "width": "172",
+                                "numeric": ""
                             },
                             "short_title": {
                                 "title": "Short Title",
                                 "parser": "",
-                                "width": 172,
-                                "numeric": false
+                                "width": "172",
+                                "numeric": ""
                             },
                             "root_page_id": {
                                 "title": "Root Page Id",
                                 "parser": "",
-                                "width": 172,
-                                "numeric": false
+                                "width": "172",
+                                "numeric": ""
                             }
                         },
-                        "options": [],
+                        "settings": [],
                         "actions": {
                             "approve": "on",
                             "edit": "on",
@@ -165,6 +165,7 @@
                         "default_position": "Bottom",
                         "return_view": null,
                         "return_url": "",
+                        "open_graph": "",
                         "tagging": "",
                         "hooks": []
                     }
@@ -240,29 +241,29 @@
                             "title": {
                                 "title": "Titel",
                                 "parser": "",
-                                "width": 172,
-                                "numeric": false
+                                "width": "172",
+                                "numeric": ""
                             },
                             "subject": {
                                 "title": "Onderwerp van verstuurde e-mails",
                                 "parser": "",
-                                "width": 172,
-                                "numeric": false
+                                "width": "172",
+                                "numeric": ""
                             },
                             "type": {
                                 "title": "Formulier type",
                                 "parser": "if($value == 'calculate-form'){     $value = 'Formulier in stappen'; } if($value == 'contact-form'){     $value = 'Standaard formulier'; }",
-                                "width": 172,
-                                "numeric": false
+                                "width": "172",
+                                "numeric": ""
                             },
                             "language": {
                                 "title": "Taal",
                                 "parser": "",
-                                "width": 172,
-                                "numeric": false
+                                "width": "172",
+                                "numeric": ""
                             }
                         },
-                        "options": [],
+                        "settings": [],
                         "actions": {
                             "approve": "on",
                             "edit": "on",
@@ -499,6 +500,7 @@
                         "default_position": "Bottom",
                         "return_view": null,
                         "return_url": "",
+                        "open_graph": "",
                         "tagging": "",
                         "hooks": []
                     }
@@ -575,22 +577,22 @@
                                 "width": "236",
                                 "title": "Titel",
                                 "parser": "",
-                                "numeric": false
+                                "numeric": ""
                             },
                             "type": {
                                 "width": "236",
                                 "title": "Type",
                                 "parser": "if($value == 'text'){     $value = 'Tekst - enkele regel'; } if($value == 'textarea'){     $value = 'Tekst - meerdere regels'; } if($value == 'radio'){     $value = 'Keuzerondje'; } if($value == 'checkbox'){     $value = 'Meerkeuze'; } if($value == 'select'){     $value = 'Selectieveld'; } if($value == 'tel'){     $value = 'Telefoonnummer'; } if($value == 'email'){     $value = 'E-mailadres'; } if($value == 'number'){     $value = 'Hoeveelheid'; }",
-                                "numeric": false
+                                "numeric": ""
                             },
                             "required": {
                                 "width": "236",
                                 "title": "Verplicht",
                                 "parser": "if($value == 'on'){     $value = 'Verplicht'; }if(!$value){     $value = 'Niet verplicht'; }",
-                                "numeric": false
+                                "numeric": ""
                             }
                         },
-                        "options": [],
+                        "settings": [],
                         "actions": {
                             "approve": "on",
                             "edit": "on",
@@ -721,6 +723,7 @@
                         "default_position": "Bottom",
                         "return_view": null,
                         "return_url": "",
+                        "open_graph": "",
                         "tagging": "",
                         "hooks": []
                     }
