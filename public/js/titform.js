@@ -33,12 +33,33 @@ window.onload = function() {
    --------------------*/
     $('.multipart-form').each(function(i, currentForm){
 
+        var formSections = $(currentForm).find('.form-item');
+
         //1. Dit zijn de input velden die die disabled moeten zijn..
-        inputs = $(this).find('input,select,textarea,button' );
+        inputs = $('input, select, textarea, button');
 
         //2. Disable alles..
-        $(this).find(inputs.addClass('disabled').attr('disabled',true));
 
+
+        function makeDisabled(element, boolean){
+            $(element).attr('disabled', boolean);
+            if(boolean === true) element.addClass('disabled');
+            else{element.removeClass('disabled');}
+        }
+
+
+
+
+        console.log($(formSections).find($(inputs)));
+
+        var toDisable = $(formSections).find($(inputs));
+
+
+        makeDisabled(toDisable,true);
+
+
+        //var disabledFields =  $(formSections).find(inputs.addClass('disabled').attr('disabled',true));
+        // console.log(disabledFields);
 
 
         //3. Vind het eerste inputveld van elke form item
@@ -69,11 +90,7 @@ window.onload = function() {
             });
         });
 
-        function makeDisabled(element, boolean){
-            $(element).attr('disabled', boolean);
-            if(boolean === true) element.addClass('disabled');
-            else{element.removeClass('disabled');}
-        }
+
 
 
 
@@ -111,28 +128,6 @@ window.onload = function() {
 
         });
 
-        //$(nextFormStep).slideDown(150, "swing").addClass('active-step');
-
-        //Check of een checkboxveld veranderd.
-        //OLD OFFICIALL---------------------------------------------
-        // $(this).find(".contain-cbox").change(function() {
-        //     var containerBox =  $(this);
-        //     var foundItem = $(this).find('.checked');
-        //     var nextGroup = containerBox.parents().next('.form-input-group');
-        //     if (foundItem.length === 0){
-        //         // console.log('Geen gechecked items!!!');
-        //         nextField = nextGroup.find('.field-item');
-        //         nextField.addClass('disabled');
-        //         nextField.attr('disabled', true);
-        //     }
-        //     if (foundItem.length >= 1){
-        //
-        //         // console.log('Er zijn gecheckede items!!!');
-        //         nextGroup.find('.field-item').removeClass('disabled');
-        //         nextGroup.find('.field-item').attr('disabled', false);
-        //     }
-        // });
-
 
 
             /*
@@ -149,10 +144,6 @@ window.onload = function() {
             }
         });
 
-
-
-
-
         /*
         * TODO: Als laatste element van een item een checkox is, wat dan?
         *  last form group moet specifieker.. last-form group > een input, textfield of whatever...
@@ -160,7 +151,7 @@ window.onload = function() {
         $(this).find(".form-item .last-form-group").change(function() {
 
 
-            var formSections = $(currentForm).find('.form-item');
+
 
 
 
@@ -178,10 +169,6 @@ window.onload = function() {
 
                 var nextFormStep =  $(this).parents('.done').next('.form-item');
 
-
-
-
-
                 // MAak het volgende stap in formulier zichtbaar
                 $(nextFormStep).slideDown(150, "swing").addClass('active-step');
                 var activeStep = $('.active-step');
@@ -193,13 +180,21 @@ window.onload = function() {
 
         //Maak verzendbutton niet meer disabled bij aanpassen ALLERlaatste inputveld
         var lastFormItem = $(this).find('.form-item').last();
-        console.log($(lastFormItem));
+        var lastFieldItems = $(lastFormItem).find('.form-input-group').last().find('.field-item');
+        console.log($(lastFieldItems));
 
-        var lastFormIteme = $(lastFormItem).find('.form-input-group');
-        console.log(lastFormIteme);
 
-        $(lastFormItem).find('.form-input-group').last().find('.field-item').change(function(){
-            console.log('Er is iets veranderd in het laatste veld!!');
+        // if(lastFieldItem.type === 'textarea'){
+        //     console.log
+        // };
+
+
+        $(lastFieldItems).change(function(){
+            if(!$(this).prop('required')){
+                makeDisabled($('.disabled-button'),false);
+            }
+
+            console.log('Last item reached');
             $('.disabled-button').prop('disabled', false); //makes it enabled
             $('form button').removeClass('disabled-button');
         });

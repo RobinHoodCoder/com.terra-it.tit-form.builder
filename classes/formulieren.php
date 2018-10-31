@@ -395,29 +395,27 @@ class TitForm extends BigTreeModule {
             echo '</div></ul>';
         }
         ?>
-
-
-
 		<form class="<?= $formType?>" action="" method="post" class="contact-form" enctype="multipart/form-data">
 			<div class="grid">
 				<div>
-					<input type="hidden" name="form_send" value="true"/>
-					<input style="display:none;" type="text" name="fietsbel" value="<?=$_SESSION['spam-iden']?>" placeholder="" />
-					<input style="display:none;" name="form-time" type="text" value="<?=time(); ?>" />
-					<input type="hidden" name="identifier" value="<?=$identifier?>">
 
-					<div class="col-12">
-						<div class="form-intro">
-                            <?
-                            //Introductietekst formulier
-                            if(isset($formItems[0]['comment'])){
-                                echo $formItems[0]['comment'];
-                            }elseif(isset($formItems['comment'])){
-                                echo $formItems['comment'];
-                            }
-                            ?>
-						</div>
-					</div>
+                        <input type="hidden" name="form_send" value="true"/>
+                        <input style="display:none;" type="text" name="fietsbel" value="<?=$_SESSION['spam-iden']?>" placeholder="" />
+                        <input style="display:none;" name="form-time" type="text" value="<?=time(); ?>" />
+                        <input type="hidden" name="identifier" value="<?=$identifier?>">
+
+                        <div class="col-12">
+                            <div class="form-intro">
+                                <?
+                                //Introductietekst formulier
+                                if(isset($formItems[0]['comment'])){
+                                    echo $formItems[0]['comment'];
+                                }elseif(isset($formItems['comment'])){
+                                    echo $formItems['comment'];
+                                }
+                                ?>
+                            </div>
+                        </div>
 
                     <?
 
@@ -535,10 +533,10 @@ class TitForm extends BigTreeModule {
                                                                 }
                                                                 break;
                                                             case 'checkbox':
-                                                                echo (!empty($fieldItem['title'])) ? '
-                                                                <div class="form-input-group">
-                                                                
-                                                                    <p>' . $fieldItem['title'].$star.'</p>' : '';
+                                                                if(!empty($fieldItem['title'])){
+                                                                echo'                                                                
+                                                                <div class="form-input-group">                                                                
+                                                                    <p>'.$fieldItem['title'].$star.'</p>';
 
                                                                     if (count($fieldItem['sub_fields']) > 1) {
                                                                         $chbxTitle = $fieldItem['title'];
@@ -556,7 +554,7 @@ class TitForm extends BigTreeModule {
                                                                                 echo('
                                                                                 <div>
                                                                                    <label class="cbox-label" for="'.$rtitle.'">
-                                                                                    <input class="field-item checkbox data-hj-whitelist '.$fieldItem['type'].'" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . ' checked>
+                                                                                    <input class="field-item checkbox data-hj-whitelist '.$fieldItem['type'].'" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" checked>
                                                                                         <span>' . $checkboxField['title'] . '</span>'.'
                                                                                         <div class="cleared"></div>
                                                                                     </label>
@@ -565,7 +563,7 @@ class TitForm extends BigTreeModule {
                                                                                 echo('
                                                                                 <div>
                                                                                     <label class="cbox-label" for="'.$rtitle.'">
-                                                                                        <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" ' . $required . '>
+                                                                                        <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '">
                                                                                         <span>' . $checkboxField['title'] . '</span>
                                                                                         <div class="cleared"></div>                                                                               
                                                                                     </label>
@@ -573,10 +571,12 @@ class TitForm extends BigTreeModule {
                                                                             }
                                                                         }
                                                                         echo ('
-                                                                        </div>
-                                                                   
+                                                                        </div>                                                                   
                                                                 </div>
                                                                 ');
+                                                                }else{
+                                                                    echo 'Lege title!';
+                                                                }
                                                                 break;
                                                             case 'select':
                                                                 echo (!empty($fieldItem['title'])) ? '<div class="form-input-group"><label for="'.$fieldItem['title'].'">' . $fieldItem['title'].$star.'</label>' : '';

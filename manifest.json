@@ -1,11 +1,11 @@
 {
     "type": "extension",
     "id": "com.terra-it.tit-form.builder",
-    "version": "0.15.44",
-    "revision": 36,
+    "version": "0.15.45",
+    "revision": 38,
     "compatibility": "4.2+",
     "title": "FormBuilder",
-    "description": "24-10-2018:\r\nExtra (lege) calculate item weggehaald.\r\n\r\n24-10-2018:\r\nJavascript aangepast voor het prijsberekenformulier.\r\nStappen zijn nu duidelijker qua actieve formulier sectie en volgende formulier sectie. Checkboxes aanklikken maakt volgende formulier input aanklikbaar. Er is nu 1 checkbox verplicht om in te vullen.\r\n\r\n22-10-2018:\r\nTextarea bug opgelost. Er stond display:none op. In plaats van een class die disabled heet.\r\n\r\n19-10-2018:\r\nCheckboxes container aangepast.\r\nTitels boven checkboxes staan nu in een p, zoals de rest van de field item titels.\r\n\r\n17-10-2018:\r\nvardump weggehaald\r\n\r\n15-10-2018:\r\nDatepicker klaargemaakt\r\n\r\nChangelog 01-10-2018:\r\n1. Conversiecode optie toegevoegd\r\n2. Debugging optie toegevoegd:\r\nwann. ingelogd alleen ingevulde formulieren naar\r\ningelogde gebruiker sturen\r\n3. Conversiecode staat uit wanneer ingelogd in het CMS\r\n4. LESS CSS geupdate (succesmelding is nu inbegrepen)\r\n5. Required form text laten zien boven verzendbutton\r\n\r\n\r\n\r\nVardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...\r\ntitform.js aangepast voor disabled formuliervelden.",
+    "description": "31-10-2018:\r\nDiverse bugfixes: niet alle velden disabled maken, de eerste fietsbel etc. moeten niet disabled zijn, anders wordt formulier niet verzonden\r\n\r\n24-10-2018:\r\nExtra (lege) calculate item weggehaald.\r\n\r\n24-10-2018:\r\nJavascript aangepast voor het prijsberekenformulier.\r\nStappen zijn nu duidelijker qua actieve formulier sectie en volgende formulier sectie. Checkboxes aanklikken maakt volgende formulier input aanklikbaar. Er is nu 1 checkbox verplicht om in te vullen.\r\n\r\n22-10-2018:\r\nTextarea bug opgelost. Er stond display:none op. In plaats van een class die disabled heet.\r\n\r\n19-10-2018:\r\nCheckboxes container aangepast.\r\nTitels boven checkboxes staan nu in een p, zoals de rest van de field item titels.\r\n\r\n17-10-2018:\r\nvardump weggehaald\r\n\r\n15-10-2018:\r\nDatepicker klaargemaakt\r\n\r\nChangelog 01-10-2018:\r\n1. Conversiecode optie toegevoegd\r\n2. Debugging optie toegevoegd:\r\nwann. ingelogd alleen ingevulde formulieren naar\r\ningelogde gebruiker sturen\r\n3. Conversiecode staat uit wanneer ingelogd in het CMS\r\n4. LESS CSS geupdate (succesmelding is nu inbegrepen)\r\n5. Required form text laten zien boven verzendbutton\r\n\r\n\r\n\r\nVardump toegevoegd om te testen\r\nExtensions zouden nu in site/extensions moeten komen na de update...\r\ntitform.js aangepast voor disabled formuliervelden.",
     "keywords": [
         ""
     ],
@@ -239,27 +239,27 @@
                         "table": "formbuilder_formulieren",
                         "fields": {
                             "title": {
+                                "width": "172",
                                 "title": "Titel",
                                 "parser": "",
-                                "width": "172",
                                 "numeric": ""
                             },
                             "subject": {
+                                "width": "172",
                                 "title": "Onderwerp van verstuurde e-mails",
                                 "parser": "",
-                                "width": "172",
                                 "numeric": ""
                             },
                             "type": {
+                                "width": "172",
                                 "title": "Formulier type",
                                 "parser": "if($value == 'calculate-form'){     $value = 'Formulier in stappen'; } if($value == 'contact-form'){     $value = 'Standaard formulier'; }",
-                                "width": "172",
                                 "numeric": ""
                             },
                             "language": {
+                                "width": "172",
                                 "title": "Taal",
                                 "parser": "",
-                                "width": "172",
                                 "numeric": ""
                             }
                         },
@@ -284,13 +284,12 @@
                                 "title": "Taal",
                                 "subtitle": "",
                                 "type": "list",
-                                "options": {
+                                "settings": {
                                     "list_type": "db",
                                     "allow-empty": "Yes",
                                     "pop-table": "languages",
                                     "pop-description": "title",
                                     "pop-sort": "`title` ASC",
-                                    "parser": "",
                                     "column": "language"
                                 },
                                 "column": "language"
@@ -299,14 +298,14 @@
                                 "title": "Debugging mode",
                                 "subtitle": "verzend ingevulde formulieren wanneer ingelogd alleen naar terra-it",
                                 "type": "checkbox",
-                                "options": null,
+                                "settings": null,
                                 "column": "debug"
                             },
                             {
                                 "title": "Titel van formulier",
                                 "subtitle": "",
                                 "type": "text",
-                                "options": {
+                                "settings": {
                                     "column": "title"
                                 },
                                 "column": "title"
@@ -315,8 +314,7 @@
                                 "title": "Korte tekst",
                                 "subtitle": "(bijvoorbeeld extra toelichting of instructies)",
                                 "type": "html",
-                                "options": {
-                                    "simple_by_permission": "0",
+                                "settings": {
                                     "column": "comment"
                                 },
                                 "column": "comment"
@@ -325,7 +323,7 @@
                                 "title": "Formulier secties / stappen",
                                 "subtitle": "",
                                 "type": "matrix",
-                                "options": {
+                                "settings": {
                                     "max": "4",
                                     "style": "list",
                                     "columns": [
@@ -333,26 +331,25 @@
                                             "type": "text",
                                             "id": "title",
                                             "title": "Sectie titel",
-                                            "subtitle": "",
-                                            "display_title": "on",
-                                            "options": ""
+                                            "display_title": "on"
                                         },
                                         {
                                             "type": "checkbox",
                                             "id": "hide_title",
-                                            "title": "Sectie titel verbergen",
-                                            "subtitle": "",
-                                            "options": ""
+                                            "title": "Sectie titel verbergen"
+                                        },
+                                        {
+                                            "type": "checkbox",
+                                            "id": "enable_all",
+                                            "title": "Velden op eigen volgorde invullen"
                                         },
                                         {
                                             "type": "one-to-many",
                                             "id": "section",
                                             "title": "Sectie velden",
-                                            "subtitle": "",
-                                            "options": "{\"table\":\"formbuilder_formuliervelden\",\"title_column\":\"title\",\"sort_by_column\":\"`position` DESC\",\"parser\":\"\",\"show_add_all\":\"on\",\"show_reset\":\"on\"}"
+                                            "settings": "{\"table\":\"formbuilder_formuliervelden\",\"title_column\":\"title\",\"sort_by_column\":\"`position` DESC\",\"parser\":\"\",\"show_add_all\":\"on\",\"show_reset\":\"on\"}"
                                         }
-                                    ],
-                                    "column": "form_stages"
+                                    ]
                                 },
                                 "column": "form_stages"
                             },
@@ -360,7 +357,7 @@
                                 "title": "Formulier sectie indeling",
                                 "subtitle": "meteen alle formulier secties tonen of in delen laten zien die pas zichtbaar worden na het invullen van de vorige?",
                                 "type": "list",
-                                "options": {
+                                "settings": {
                                     "validation": "required",
                                     "list_type": "static",
                                     "allow-empty": "No",
@@ -374,8 +371,6 @@
                                             "description": "Verdeeld in stappen (voor prijscalculatie o.a.)"
                                         }
                                     ],
-                                    "pop-table": "",
-                                    "parser": "",
                                     "column": "type"
                                 },
                                 "column": "type"
@@ -384,7 +379,7 @@
                                 "title": "Foutmelding wanneer formulier verkeerd is ingevuld",
                                 "subtitle": "tekst boven opsomming van verkeerde / niet ingevulde velden",
                                 "type": "textarea",
-                                "options": {
+                                "settings": {
                                     "column": "error_introduction"
                                 },
                                 "column": "error_introduction"
@@ -393,7 +388,7 @@
                                 "title": "Succesmelding",
                                 "subtitle": "",
                                 "type": "text",
-                                "options": {
+                                "settings": {
                                     "column": "success_message"
                                 },
                                 "column": "success_message"
@@ -402,7 +397,7 @@
                                 "title": "E-mailadres waarmee het formulier mailt (noreply@bedrijfsnaam.nl raden wij aan)",
                                 "subtitle": "het e-mail adres waarmee ingevulde formulieren (naar u) worden gestuurd",
                                 "type": "text",
-                                "options": {
+                                "settings": {
                                     "column": "email_from"
                                 },
                                 "column": "email_from"
@@ -411,20 +406,14 @@
                                 "title": "Logo",
                                 "subtitle": "logo voor in het e-mailbericht dat het formulier verstuurd",
                                 "type": "upload",
-                                "options": {
+                                "settings": {
                                     "directory": "files/modules/",
                                     "image": "on",
-                                    "preset": "",
-                                    "min_width": "",
-                                    "min_height": "",
-                                    "preview_prefix": "",
                                     "retina": "on",
                                     "thumbs": [
                                         {
                                             "prefix": "mail_",
-                                            "width": "200",
-                                            "height": "",
-                                            "grayscale": ""
+                                            "width": "200"
                                         }
                                     ],
                                     "column": "image"
@@ -435,7 +424,7 @@
                                 "title": "Onderwerp van e-mailberichten die het formulier vertuurd naar u",
                                 "subtitle": "onderwerp van de mail die u in uw mailbox krijgt wanneer iemand een formulier heeft ingevuld",
                                 "type": "text",
-                                "options": {
+                                "settings": {
                                     "column": "subject"
                                 },
                                 "column": "subject"
@@ -444,7 +433,7 @@
                                 "title": "E-mailadres waar de ingevulde formulieren heen worden gestuurd",
                                 "subtitle": "meestal uw eigen (bedrijfs) e-mailadres",
                                 "type": "text",
-                                "options": {
+                                "settings": {
                                     "column": "email_to"
                                 },
                                 "column": "email_to"
@@ -453,8 +442,7 @@
                                 "title": "E-mailbericht template",
                                 "subtitle": "Automatisch e-mailbericht sturen naar klant?",
                                 "type": "checkbox",
-                                "options": {
-                                    "simple_by_permission": "0",
+                                "settings": {
                                     "column": "reply_template"
                                 },
                                 "column": "reply_template"
@@ -463,7 +451,7 @@
                                 "title": "E-mailbericht titel (Klant)",
                                 "subtitle": "Titel van de e-mail die naar de klant verstuurd word",
                                 "type": "text",
-                                "options": {
+                                "settings": {
                                     "column": "return_title"
                                 },
                                 "column": "return_title"
@@ -472,7 +460,7 @@
                                 "title": "Verplicht veld tekst (*= verplicht veld)",
                                 "subtitle": "",
                                 "type": "text",
-                                "options": {
+                                "settings": {
                                     "column": "required_text"
                                 },
                                 "column": "required_text"
@@ -481,10 +469,8 @@
                                 "title": "Button Tekst",
                                 "subtitle": "",
                                 "type": "text",
-                                "options": {
+                                "settings": {
                                     "validation": "required",
-                                    "sub_type": "",
-                                    "max_length": "",
                                     "column": "button_text"
                                 },
                                 "column": "button_text"
@@ -493,7 +479,7 @@
                                 "title": "Conversie code",
                                 "subtitle": "conversie code voor als een formulier succesvol is verstuurd (bijv. Google Adwords)",
                                 "type": "com.fastspot.rawtext-field-types*raw-textarea",
-                                "options": null,
+                                "settings": null,
                                 "column": "conversion_code"
                             }
                         ],
