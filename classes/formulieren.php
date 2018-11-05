@@ -124,11 +124,14 @@ class TitForm extends BigTreeModule {
             }
         }
 
+
         if ($formItems['type'] == 'calculate-form'){
             $formType = 'multipart-form';
             $formClass = 'calculate-item';
             $disabled = 'style="display:none;"';
             $buttonDisabled = 'disabled-button';
+
+
         }else{
             $formType = 'single-form';
             $formClass = '';
@@ -418,221 +421,243 @@ class TitForm extends BigTreeModule {
                         </div>
 
                     <?
-
                     $amount = count($fields);
 
+
+
                     // Uit hoeveel onderdelen bestaat dit formulier? lets find out!
-                    if ($amount === 1){
-                        echo '<div class="col-12 col-medium-12 col-small-12 col-mobile-12 form-item">';
-                    }
-                    if($amount > 1){
-                        echo '<div class="col-6 col-small-12 col-mobile-12 form-item first-item">';
-                    }
+
 
                     $i=0;
                     foreach($stages as $stage){
-
-
-
-
-
-
                         
                         if(is_array($stage)){
+                            if ($amount === 1){
+                                echo '<div class="col-12 col-medium-12 col-small-12 col-mobile-12 form-item">';
+                            }
+                            if($amount > 1){
+                                echo '<div class="col-6 col-small-12 col-mobile-12 form-item first-item">';
+                            }
+
+
 
                             //var_dump($stage);
                             foreach($stage as $stageItem){
-                                $i++;
 
-                                // Show stage titel
-                                if(isset($stageItem['title']) && !empty($stageItem['title']) && (!$stageItem['hide_title'])){
-                                    echo '<div class="form-input-group-title"><h3>'.$stageItem['title'].'</h3></div>';
+
+
+                                //var_dump($stageItem);
+                                if($stageItem['enable_all'] === 'on'){
+                                    $clickableClass = 'availability enable-always';
+                                }else{
+                                    $clickableClass = 'availability';
                                 }
-                                if($stageItem['hide_title'] === 'on'){?>
-									<div class="form-spacer"></div>
-                                <?}
+                                $i++;?>
 
-                                // Tel op en loop
+                                    <?
+                                    //        enable_all
+    //                                $editAlways = 'always_enabled';
 
-                                if (isset($stageItem['section'])) {
-                                    foreach ($stageItem['section'] as $section) {
-                                        if (isset($fieldItems)) {
-                                            $check = array();
-                                            foreach ($fieldItems as $fieldItem) {
-                                                if (isset($fieldItem['id']) && $fieldItem['id'] == $section) {
-                                                    // Zorg voor alleen unieke velden
-                                                    if (!in_array($fieldItem[0], $check)) {
-                                                        $rtitle = str_replace(' ', '_', $fieldItem['title']);
+                                    // Show stage titel
+                                    if(isset($stageItem['title']) && !empty($stageItem['title']) && (!$stageItem['hide_title'])){
+                                    echo '    <div class="form-input-group-title">
+                                               <h3>'.$stageItem['title'].'</h3>
+                                               </div>';
+                                    }
+                                    if($stageItem['hide_title'] === 'on'){?>
+                                        <div class="form-spacer"></div>
+                                    <?}?>
+                                    <div class="<?=$clickableClass?>">
+                                        <?if (isset($stageItem['section'])) {
 
-                                                        if($fieldItem['required'] == 'on'){
-                                                            $required = 'required';
-                                                            $star = ' *';
-                                                        }else{
-                                                            $star = '';
-                                                            $required = '';
-                                                        }
+                                        foreach ($stageItem['section'] as $section) {
 
-                                                        // Textitems
-                                                        switch ($fieldItem['type']) {
-                                                            //Tekstveld standaard
-                                                            case 'text':
-                                                                echo('<div class="form-input-group"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $fieldItem['title'] .$star.'" ' . $required . '></div>');
-                                                                break;
-                                                            case 'email':
-                                                                echo('<div class="form-input-group"><input class="field-item data-hj-whitelist" name="' . $fieldItem['type'] . '" value="' . $post[$rtitle] . '" type="email" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '></div>');
-                                                                break;
-                                                            case 'tel':
-                                                                echo('<div class="form-input-group"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '></div>');
-                                                                break;
-                                                            case 'number':
-                                                                //Pak het woord dat tussen blokhaakjes staat bijvoorbeeld: "[meter]", zet deze in een variable en haal het uit de titel van het veld
-                                                                $numberTitle = $fieldItem['title'];
-                                                                preg_match_all("/\[[^\]]*\]/", $numberTitle, $matches);
-                                                                $matches = implode(" ", $matches[0]);
-                                                                $units = trim($matches,"[]");
+                                            if (isset($fieldItems)) {
+                                                $check = array();
+                                                foreach ($fieldItems as $fieldItem) {
 
-                                                                $numberTitle = str_replace($matches, '', $numberTitle);
-                                                                $numberTitle = trim($numberTitle);
 
-                                                                echo '<div class="form-input-group"><div class="numberGroup">';
-                                                                echo '<label for="'.$fieldItem['title'].'">'.$numberTitle.'</label>';
-                                                                echo('<input id="'.$fieldItem['title'].'" class="field-item data-hj-whitelist '.$fieldItem['type'].' " name="' . $numberTitle . '" value="' . $post[$rtitle] . '" type="number" min="0" max="999" maxlength="4" placeholder="..." ' . $required . '>');
-                                                                echo '</div></div>';
-                                                                break;
-                                                            case 'textarea':
-                                                                echo('<div class="form-input-group">
-                                                                        <textarea class="field-item data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '>' . $post[$rtitle] . '</textarea>
-                                                                    </div>');
-                                                                break;
-                                                            case 'radio':
-                                                                echo '<div class="form-input-group">';
-                                                                echo (!empty($fieldItem['title'])) ? '<p>' . $fieldItem['title'].$star.'</p>' : '';
-                                                                echo ('<radiogroup>');
-                                                                foreach ($fieldItem['sub_fields'] as $radioField) {
-                                                                    $rtitle = str_replace(' ', '_', $radioField['title']);
 
-                                                                    if ($radioField['option-type'] == 'textual'){
-                                                                        $textualClass = true;
-                                                                        $openInput = 'open-new-input';
-                                                                        $textualTitle = $radioField['title'];
-                                                                    }else{
-                                                                        $textualClass = false;
-                                                                        $openInput = '';
-                                                                        $textualTitle = '';
+                                                    if (isset($fieldItem['id']) && $fieldItem['id'] == $section) {
+                                                        // Zorg voor alleen unieke velden
+                                                        if (!in_array($fieldItem[0], $check)) {
+                                                            $rtitle = str_replace(' ', '_', $fieldItem['title']);
+
+                                                            if($fieldItem['required'] == 'on'){
+                                                                $required = 'required';
+                                                                $star = ' *';
+                                                            }else{
+                                                                $star = '';
+                                                                $required = '';
+                                                            }
+
+                                                            // Textitems
+                                                            ?>
+
+                                                            <?switch ($fieldItem['type']) {
+                                                                //Tekstveld standaard
+                                                                case 'text':
+                                                                    echo('<div class="form-input-group"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $fieldItem['title'] .$star.'" ' . $required . '></div>');
+                                                                    break;
+                                                                case 'email':
+                                                                    echo('<div class="form-input-group"><input class="field-item data-hj-whitelist" name="' . $fieldItem['type'] . '" value="' . $post[$rtitle] . '" type="email" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '></div>');
+                                                                    break;
+                                                                case 'tel':
+                                                                    echo('<div class="form-input-group"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '></div>');
+                                                                    break;
+                                                                case 'number':
+                                                                    //Pak het woord dat tussen blokhaakjes staat bijvoorbeeld: "[meter]", zet deze in een variable en haal het uit de titel van het veld
+                                                                    $numberTitle = $fieldItem['title'];
+                                                                    preg_match_all("/\[[^\]]*\]/", $numberTitle, $matches);
+                                                                    $matches = implode(" ", $matches[0]);
+                                                                    $units = trim($matches,"[]");
+
+                                                                    $numberTitle = str_replace($matches, '', $numberTitle);
+                                                                    $numberTitle = trim($numberTitle);
+
+                                                                    echo '<div class="form-input-group"><div class="numberGroup">';
+                                                                    echo '<label for="'.$fieldItem['title'].'">'.$numberTitle.'</label>';
+                                                                    echo('<input id="'.$fieldItem['title'].'" class="field-item data-hj-whitelist '.$fieldItem['type'].' " name="' . $numberTitle . '" value="' . $post[$rtitle] . '" type="number" min="0" max="999" maxlength="4" placeholder="..." ' . $required . '>');
+                                                                    echo '</div></div>';
+                                                                    break;
+                                                                case 'textarea':
+                                                                    echo('<div class="form-input-group">
+                                                                            <textarea class="field-item data-hj-whitelist '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '>' . $post[$rtitle] . '</textarea>
+                                                                        </div>');
+                                                                    break;
+                                                                case 'radio':
+                                                                    echo '<div class="form-input-group">';
+                                                                    echo (!empty($fieldItem['title'])) ? '<p>' . $fieldItem['title'].$star.'</p>' : '';
+                                                                    echo ('<radiogroup>');
+                                                                    foreach ($fieldItem['sub_fields'] as $radioField) {
+                                                                        $rtitle = str_replace(' ', '_', $radioField['title']);
+
+                                                                        if ($radioField['option-type'] == 'textual'){
+                                                                            $textualClass = true;
+                                                                            $openInput = 'open-new-input';
+                                                                            $textualTitle = $radioField['title'];
+                                                                        }else{
+                                                                            $textualClass = false;
+                                                                            $openInput = '';
+                                                                            $textualTitle = '';
+                                                                        }
+                                                                        // Input value als form errors aanwezig zijn
+                                                                        if (isset($post) && in_array($rtitle, $post)) {
+                                                                            echo('<div class="contain-radio"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'  '. $openInput .'" type="radio" name="' . $fieldItem['title'] . '" id="' . $radioField['title'] . '" value="' . $radioField['title'] . '" ' . $required . ' checked/><label for="' . $radioField['title'] . '">' . $radioField['title'] . '</label></div>');
+                                                                        } else {
+                                                                            echo('<div class="contain-radio"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'  '. $openInput .'" type="radio" name="' . $fieldItem['title'] . '" id="' . $radioField['title'] . '" value="' . $radioField['title'] . '" ' . $required . '/><label for="' . $radioField['title'] . '">' . $radioField['title'] . '</label></div>');
+                                                                        }
                                                                     }
-                                                                    // Input value als form errors aanwezig zijn
-                                                                    if (isset($post) && in_array($rtitle, $post)) {
-                                                                        echo('<div class="contain-radio"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'  '. $openInput .'" type="radio" name="' . $fieldItem['title'] . '" id="' . $radioField['title'] . '" value="' . $radioField['title'] . '" ' . $required . ' checked/><label for="' . $radioField['title'] . '">' . $radioField['title'] . '</label></div>');
-                                                                    } else {
-                                                                        echo('<div class="contain-radio"><input class="field-item data-hj-whitelist '.$fieldItem['type'].'  '. $openInput .'" type="radio" name="' . $fieldItem['title'] . '" id="' . $radioField['title'] . '" value="' . $radioField['title'] . '" ' . $required . '/><label for="' . $radioField['title'] . '">' . $radioField['title'] . '</label></div>');
+                                                                    echo ('</radiogroup></div>');
+                                                                    if($textualClass){
+                                                                        echo('<div class="form-input-group"><input class="field-item otherwise data-hj-whitelist" name="' . $textualTitle . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $textualTitle . '"></div>');
                                                                     }
-                                                                }
-                                                                echo ('</radiogroup></div>');
-                                                                if($textualClass){
-                                                                    echo('<div class="form-input-group"><input class="field-item otherwise data-hj-whitelist" name="' . $textualTitle . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $textualTitle . '"></div>');
-                                                                }
-                                                                break;
-                                                            case 'checkbox':
-                                                                if(!empty($fieldItem['title'])){
-                                                                echo'                                                                
-                                                                <div class="form-input-group">                                                                
-                                                                    <p>'.$fieldItem['title'].$star.'</p>';
+                                                                    break;
+                                                                case 'checkbox':
+                                                                    if(!empty($fieldItem['title'])){
+                                                                    echo'                                                                
+                                                                    <div class="form-input-group">                                                                
+                                                                        <p>'.$fieldItem['title'].$star.'</p>';
 
-                                                                    if (count($fieldItem['sub_fields']) > 1) {
-                                                                        $chbxTitle = $fieldItem['title'];
-                                                                    } else {
-                                                                        $chbxTitle = $fieldItem['title'];
-                                                                    }
-                                                                    echo ('
-                                                                    
-                                                                        <div class="contain-cbox">');
-                                                                        foreach ($fieldItem['sub_fields'] as $checkboxField) {
-                                                                            $rtitle = str_replace(' ', '_', $checkboxField['title']);
-
-                                                                            // Input value als form errors aanwezig zijn
-                                                                            if (isset($post) && in_array($rtitle, $post)) {
-                                                                                echo('
-                                                                                <div>
-                                                                                   <label class="cbox-label" for="'.$rtitle.'">
-                                                                                    <input class="field-item checkbox data-hj-whitelist '.$fieldItem['type'].'" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" checked>
-                                                                                        <span>' . $checkboxField['title'] . '</span>'.'
-                                                                                        <div class="cleared"></div>
-                                                                                    </label>
-                                                                                </div>');
-                                                                            } else {
-                                                                                echo('
-                                                                                <div>
-                                                                                    <label class="cbox-label" for="'.$rtitle.'">
-                                                                                        <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '">
-                                                                                        <span>' . $checkboxField['title'] . '</span>
-                                                                                        <div class="cleared"></div>                                                                               
-                                                                                    </label>
-                                                                                </div>');
-                                                                            }
+                                                                        if (count($fieldItem['sub_fields']) > 1) {
+                                                                            $chbxTitle = $fieldItem['title'];
+                                                                        } else {
+                                                                            $chbxTitle = $fieldItem['title'];
                                                                         }
                                                                         echo ('
-                                                                        </div>                                                                   
-                                                                </div>
-                                                                ');
-                                                                }else{
-                                                                    echo 'Lege title!';
-                                                                }
-                                                                break;
-                                                            case 'select':
-                                                                echo (!empty($fieldItem['title'])) ? '<div class="form-input-group"><label for="'.$fieldItem['title'].'">' . $fieldItem['title'].$star.'</label>' : '';
-                                                                echo('<select id="'.$fieldItem['title'].'" class="field-item '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" ' . $required . '>');
-                                                                echo '<option value="">Selecteer een optie</option> ';
-                                                                foreach ($fieldItem['sub_fields'] as $selectField) {
-                                                                    $rtitle = str_replace(' ', '_', $selectField['title']);
+                                                                        
+                                                                            <div class="contain-cbox">');
+                                                                            foreach ($fieldItem['sub_fields'] as $checkboxField) {
+                                                                                $rtitle = str_replace(' ', '_', $checkboxField['title']);
 
-                                                                    if ($selectField['option-type'] == 'textual'){
-                                                                        $textualSelect = true;
-                                                                        $openInput = 'open-new-input';
-                                                                        $selectTitle = $selectField['title'];
+                                                                                // Input value als form errors aanwezig zijn
+                                                                                if (isset($post) && in_array($rtitle, $post)) {
+                                                                                    echo('
+                                                                                    <div>
+                                                                                       <label class="cbox-label" for="'.$rtitle.'">
+                                                                                        <input class="field-item checkbox data-hj-whitelist '.$fieldItem['type'].'" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '" checked>
+                                                                                            <span>' . $checkboxField['title'] . '</span>'.'
+                                                                                            <div class="cleared"></div>
+                                                                                        </label>
+                                                                                    </div>');
+                                                                                } else {
+                                                                                    echo('
+                                                                                    <div>
+                                                                                        <label class="cbox-label" for="'.$rtitle.'">
+                                                                                            <input class="field-item data-hj-whitelist '.$fieldItem['type'].' label__checkbox" id="'.$rtitle.'" type="checkbox" name="' . $chbxTitle . '[]" value="' . $checkboxField['title'] . '">
+                                                                                            <span>' . $checkboxField['title'] . '</span>
+                                                                                            <div class="cleared"></div>                                                                               
+                                                                                        </label>
+                                                                                    </div>');
+                                                                                }
+                                                                            }
+                                                                            echo ('
+                                                                            </div>                                                                   
+                                                                    </div>
+                                                                    ');
                                                                     }else{
-                                                                        $textualSelect = false;
-                                                                        $openInput = '';
-                                                                        $selectTitle = '';
+                                                                        echo 'Lege title!';
                                                                     }
+                                                                    break;
+                                                                case 'select':
+                                                                    echo (!empty($fieldItem['title'])) ? '<div class="form-input-group"><label for="'.$fieldItem['title'].'">' . $fieldItem['title'].$star.'</label>' : '';
+                                                                    echo('<select id="'.$fieldItem['title'].'" class="field-item '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" ' . $required . '>');
+                                                                    echo '<option value="">Selecteer een optie</option> ';
+                                                                    foreach ($fieldItem['sub_fields'] as $selectField) {
+                                                                        $rtitle = str_replace(' ', '_', $selectField['title']);
 
-                                                                    // Input value als form errors aanwezig zijn
-                                                                    if (isset($post) && in_array($rtitle, $post)) {
-                                                                        echo('<option class="data-hj-whitelist '. $openInput .'" value="' . $selectField['title'] . '" selected>' . $selectField['title'] . '</option> ');
-                                                                    } else {
-                                                                        echo('<option class="data-hj-whitelist '. $openInput .'" value="' . $selectField['title'] . '">' . $selectField['title'] . '</option> ');
+                                                                        if ($selectField['option-type'] == 'textual'){
+                                                                            $textualSelect = true;
+                                                                            $openInput = 'open-new-input';
+                                                                            $selectTitle = $selectField['title'];
+                                                                        }else{
+                                                                            $textualSelect = false;
+                                                                            $openInput = '';
+                                                                            $selectTitle = '';
+                                                                        }
+
+                                                                        // Input value als form errors aanwezig zijn
+                                                                        if (isset($post) && in_array($rtitle, $post)) {
+                                                                            echo('<option class="data-hj-whitelist '. $openInput .'" value="' . $selectField['title'] . '" selected>' . $selectField['title'] . '</option> ');
+                                                                        } else {
+                                                                            echo('<option class="data-hj-whitelist '. $openInput .'" value="' . $selectField['title'] . '">' . $selectField['title'] . '</option> ');
+                                                                        }
                                                                     }
-                                                                }
-                                                                echo('</select></div>');
-                                                                if($textualSelect){
-                                                                    echo('<div class="form-input-group"><input class="field-item otherwise data-hj-whitelist" name="' . $selectTitle . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $selectTitle . '"></div>');
+                                                                    echo('</select></div>');
+                                                                    if($textualSelect){
+                                                                        echo('<div class="form-input-group"><input class="field-item otherwise data-hj-whitelist" name="' . $selectTitle . '" value="' . $post[$rtitle] . '" type="text" placeholder="' . $selectTitle . '"></div>');
 
-                                                                }
-                                                                break;
-                                                            case 'date':
-                                                                echo('<div class="form-input-group date-group"><label>'.$fieldItem['title'].'<input class="field-item date data-hj-whitelist'.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="Kies datum: " ' . $required . '></label></div>');
-                                                                break;
-                                                            case 'upload':
-                                                                echo '<p>'.$fieldItem['title'].'</p>';
-                                                                echo('<div class="form-input-group"><input class="field-item '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="file" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '></div>');
-                                                                break;
+                                                                    }
+                                                                    break;
+                                                                case 'date':
+                                                                    echo('<div class="form-input-group date-group"><label>'.$fieldItem['title'].'<input autocomplete="off" class="field-item date data-hj-whitelist'.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="text" placeholder="Kies datum: " ' . $required . '></label></div>');
+                                                                    break;
+                                                                case 'upload':
+                                                                    echo '<p>'.$fieldItem['title'].'</p>';
+                                                                    echo('<div class="form-input-group"><input class="field-item '.$fieldItem['type'].'" name="' . $fieldItem['title'] . '" value="' . $post[$rtitle] . '" type="file" placeholder="' . $fieldItem['title'].$star.'" ' . $required . '></div>');
+                                                                    break;
+                                                            }
+                                                            $check[] = $fieldItem[0];?>
+
+                                                            <?
                                                         }
-                                                        $check[] = $fieldItem[0];
                                                     }
                                                 }
                                             }
                                         }
+                                    }?>
+                                    </div>
+
+                                    <?if($i < $amount){
+                                        echo '</div><div class="col-6 col-small-12 col-mobile-12 form-item '.$formClass.'" '.$disabled.'>';
+                                    }elseif($i === $amount){
+
                                     }
-                                }
-                                if($i < $amount){
-                                    echo '</div><div class="col-6 col-small-12 col-mobile-12 form-item '.$formClass.'" '.$disabled.'>';
-                                }elseif($i === $amount){
+                                    elseif($i <= 1){
 
-                                }
-                                elseif($i <= 1){
+                                    }?>
 
-                                }
-
-                            }
+                            <?}
                         }
                     }
                     ?>
